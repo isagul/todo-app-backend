@@ -80,7 +80,7 @@ exports.getTasksByStatus = (req, res, next) => {
                 res.status(200).json({
                     status: true,
                     count: result.length,
-                    result
+                    result: result.filter(item => item.status !== 'deleted')
                 })
             })
             .catch(err => {
@@ -126,7 +126,34 @@ exports.updateStatus = (req, res, next) => {
 }
 
 exports.deleteTaskTemporarily = (req, res, next) => {
+    const { id } = req.body;
 
+    Task.findOneAndUpdate({ _id: id }, { $set: { status: 'deleted' } }, { new: true })
+        .exec()
+        .then(result => {
+            Task.find()
+                .exec()
+                .then(result => {
+                    res.status(200).json({
+                        status: true,
+                        count: result.length,
+                        result
+                    })
+                })
+                .catch(err => {
+                    res.status(200).json({
+                        status: false,
+                        error: err
+                    })
+                })
+
+        })
+        .catch(err => {
+            res.status(200).json({
+                status: false,
+                error: err
+            })
+        })
 }
 
 exports.deleteTaskPermanently = (req, res, next) => {
