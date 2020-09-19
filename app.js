@@ -7,7 +7,6 @@ const app = express();
 
 const taskRoutes = require('./api/routers/Task');
 
-// const url = `mongodb+srv://isa:${process.env.MONGO_PASS}@scrum-poker-smfdk.mongodb.net/test?retryWrites=true&w=majority`;
 const url = `mongodb+srv://isa:${process.env.MONGO_PASS}@savenote.td8rc.mongodb.net/test?retryWrites=true&w=majority`;
 
 mongoose.connect(url, {

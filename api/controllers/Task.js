@@ -54,7 +54,6 @@ exports.getAllTasks = (req, res, next) => {
 }
 
 exports.getTasksByStatus = (req, res, next) => {
-    // console.log(req.body);
     const { status } = req.body;
 
     if (status !== 'all') {
@@ -90,8 +89,6 @@ exports.getTasksByStatus = (req, res, next) => {
                 })
             })
     }
-
-
 }
 
 exports.updateStatus = (req, res, next) => {
@@ -158,7 +155,7 @@ exports.deleteTaskTemporarily = (req, res, next) => {
 
 exports.deleteTaskPermanently = (req, res, next) => {
     const { id } = req.params;
-    
+
     Task.findOne({ _id: id })
         .exec()
         .then(task => {
@@ -197,8 +194,4 @@ exports.deleteTaskPermanently = (req, res, next) => {
                     })
             }
         })
-}
-
-exports.undoTask = (req, res, next) => {
-
 }
